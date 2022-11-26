@@ -16,3 +16,9 @@ GameMap::~GameMap()
 {
 
 }
+
+// slot
+void GameMap::eatCookieHandler(Cookie * cookie)
+{
+    this->removeItem(cookie);
+}

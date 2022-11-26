@@ -24,8 +24,8 @@ protected:
     void advance(int step) override;
 
 private:
-    qreal xpos;
-    qreal ypos;
+    qreal xPos;
+    qreal yPos;
     qreal width;
     qreal height;
     int dir;

@@ -1,5 +1,7 @@
 #include "mainwidget.h"
 #include "./ui_mainwidget.h"
+#include "pacman.h"
+
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
@@ -9,12 +11,17 @@ MainWidget::MainWidget(QWidget *parent)
     ui->setupUi(this);
 
     this->map = new GameMap(ui->graphicsView);
-    this->pacman = new Pacman();
+    Pacman * pacman = new Pacman();
+    Cookie * cookie = new Cookie(200,300);
 
     this->map->addItem(pacman);
+    this->map->addItem(cookie);
 
-    connect(this, SIGNAL(changeDirectionSignal(int)), this->pacman,SLOT(changeDirectionHandler(int)));
+    connect(this, SIGNAL(changeDirectionSignal(int)), pacman,SLOT(changeDirectionHandler(int)));
+    connect(cookie, SIGNAL(eatSignal(Cookie*)), this->map, SLOT(eatCookieHandler(Cookie*)));
+    connect(cookie, SIGNAL(eatSignal(Cookie*)), this, SLOT(scoreUpHandler()));
     connect(this->timer, SIGNAL(timeout()), this->map, SLOT(advance()));
+
     timer->start(10);
 }
 
@@ -37,4 +44,10 @@ void MainWidget::keyPressEvent(QKeyEvent * event)
     {
         emit this->changeDirectionSignal(key);
     }
+}
+
+void MainWidget::scoreUpHandler()
+{
+    int score = ui->labelScore->text().toInt() + 10;
+    ui->labelScore->setText(QString::number(score));
 }

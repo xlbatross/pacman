@@ -3,6 +3,8 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QDebug>
+#include "cookie.h"
 
 class GameMap : public QGraphicsScene
 {
@@ -11,6 +13,10 @@ class GameMap : public QGraphicsScene
 public:
     explicit GameMap(QGraphicsView * parent);
     ~GameMap();
+
+public slots:
+    void eatCookieHandler(Cookie *);
+
 };
 
 #endif // GAMEMAP_H

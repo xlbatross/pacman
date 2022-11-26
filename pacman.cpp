@@ -1,13 +1,14 @@
 #include "pacman.h"
 #include "mapobject.h"
+#include "cookie.h"
 
 Pacman::Pacman()
 {
-    this->xpos = 0;
-    this->ypos = 0;
+    this->xPos = 300;
+    this->yPos = 500;
     this->width = 50;
     this->height = 50;
-    this->dir = Up;
+    this->dir = Stop;
     this->dis = 4;
 }
 
@@ -48,23 +49,23 @@ void Pacman::advance(int step)
             switch(this->dir)
             {
             case Up:
-                if (otherRect.y() <= this->ypos)
-                    this->ypos = otherRect.y() + otherRect.height();
+                if (otherRect.y() <= this->yPos)
+                    this->yPos = otherRect.y() + otherRect.height();
                 qDebug() << "stop from up";
                 break;
             case Down:
-                if (otherRect.y() >= this->ypos)
-                    this->ypos = otherRect.y() - this->height;
+                if (otherRect.y() >= this->yPos)
+                    this->yPos = otherRect.y() - this->height;
                 qDebug() << "stop from down";
                 break;
             case Left:
-                if (otherRect.x() <= this->xpos)
-                    this->xpos = otherRect.x() + otherRect.width();
+                if (otherRect.x() <= this->xPos)
+                    this->xPos = otherRect.x() + otherRect.width();
                 qDebug() << "stop from left";
                 break;
             case Right:
-                if (otherRect.x() >= this->xpos)
-                    this->xpos = otherRect.x() - this->width;
+                if (otherRect.x() >= this->xPos)
+                    this->xPos = otherRect.x() - this->width;
                 qDebug() << "stop from right";
                 break;
             }
@@ -73,23 +74,23 @@ void Pacman::advance(int step)
     }
 
     // move
-
+    QRectF sceneRect = this->scene()->sceneRect();
     switch (this->dir) {
     case Up:
-        this->ypos = (this->ypos >= this->dis) ? this->ypos - this->dis : 0;
+        this->yPos = (this->yPos >= sceneRect.y() + this->dis) ? this->yPos - this->dis : sceneRect.y();
         break;
     case Left:
-        this->xpos = (this->xpos >= this->dis) ? this->xpos - this->dis : 0;
+        this->xPos = (this->xPos >= sceneRect.x() + this->dis) ? this->xPos - this->dis : sceneRect.x();
         break;
     case Down:
-        this->ypos = (this->ypos + this->height <= this->scene()->height() - this->dis) ? this->ypos + this->dis : this->scene()->height() - this->height;
+        this->yPos = (this->yPos + this->height <= sceneRect.y() + this->scene()->height() - this->dis) ? this->yPos + this->dis : sceneRect.y() + this->scene()->height() - this->height;
         break;
     case Right:
-        this->xpos = (this->xpos + this->width <= this->scene()->width() - this->dis) ? this->xpos + this->dis : this->scene()->width() - this->width;
+        this->xPos = (this->xPos + this->width <= sceneRect.x() + this->scene()->width() - this->dis) ? this->xPos + this->dis : sceneRect.x() + this->scene()->width() - this->width;
         break;
     }
 
-    this->setPos(this->xpos, this->ypos);
+    this->setPos(this->xPos, this->yPos);
 }
 
 // slots

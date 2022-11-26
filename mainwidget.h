@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QKeyEvent>
 #include <QTimer>
-#include "pacman.h"
 #include "gamemap.h"
 
 QT_BEGIN_NAMESPACE
@@ -23,8 +22,10 @@ public:
 private:
     Ui::MainWidget *ui;
     GameMap * map;
-    Pacman * pacman;
     QTimer * timer;
+
+private slots:
+    void scoreUpHandler();
 
 signals:
     void changeDirectionSignal(int dir);

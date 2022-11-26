@@ -3,6 +3,7 @@
 
 #include <QGraphicsRectItem>
 #include <QPainter>
+#include <QDebug>
 
 class MapObject : public QGraphicsRectItem
 {

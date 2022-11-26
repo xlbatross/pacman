@@ -24,6 +24,8 @@ set(PROJECT_SOURCES
         gamemap.cpp
         mapobject.h
         mapobject.cpp
+        cookie.h
+        cookie.cpp
         mainwidget.cpp
         mainwidget.h
         mainwidget.ui
