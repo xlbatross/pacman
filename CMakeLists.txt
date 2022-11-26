@@ -20,8 +20,8 @@ set(PROJECT_SOURCES
         main.cpp
         pacman.cpp
         pacman.h
-        pacmanthread.cpp
-        pacmanthread.h
+        gamemap.h
+        gamemap.cpp
         mapobject.h
         mapobject.cpp
         mainwidget.cpp

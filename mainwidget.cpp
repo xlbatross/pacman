@@ -4,21 +4,18 @@
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MainWidget)
-    , map(new QGraphicsScene)
-    , pacman(new Pacman)
-    , pacmanThread(new PacmanThread(this->map, this->pacman))
+    , timer(new QTimer(this))
 {
     ui->setupUi(this);
 
-    ui->graphicsView->setScene(this->map);
-    this->map->setSceneRect(QRectF(ui->graphicsView->pos().x(), ui->graphicsView->pos().y(), ui->graphicsView->width() - 2, ui->graphicsView->height() - 2));
-    this->map->setBackgroundBrush(QBrush(Qt::blue));
+    this->map = new GameMap(ui->graphicsView);
+    this->pacman = new Pacman();
+
     this->map->addItem(pacman);
-    this->map->addRect(QRectF(100, 203, 100, 50));
 
-    this->pacmanThread->start();
-
-    connect(this, SIGNAL(changeDirection(int)), this->pacmanThread, SLOT(changeDirection(int)));
+    connect(this, SIGNAL(changeDirectionSignal(int)), this->pacman,SLOT(changeDirectionHandler(int)));
+    connect(this->timer, SIGNAL(timeout()), this->map, SLOT(advance()));
+    timer->start(10);
 }
 
 MainWidget::~MainWidget()
@@ -28,11 +25,16 @@ MainWidget::~MainWidget()
 
 void MainWidget::keyPressEvent(QKeyEvent * event)
 {
+    int key = Pacman::Stop;
     switch(event->key())
     {
-    case Qt::Key_W : emit this->changeDirection(PacmanThread::Up); break;
-    case Qt::Key_A : emit this->changeDirection(PacmanThread::Left); break;
-    case Qt::Key_S : emit this->changeDirection(PacmanThread::Down); break;
-    case Qt::Key_D : emit this->changeDirection(PacmanThread::Right); break;
+    case Qt::Key_W : key = Pacman::Up; break;
+    case Qt::Key_A : key = Pacman::Left; break;
+    case Qt::Key_S : key = Pacman::Down; break;
+    case Qt::Key_D : key = Pacman::Right; break;
+    }
+    if (key > Pacman::Stop)
+    {
+        emit this->changeDirectionSignal(key);
     }
 }

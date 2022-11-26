@@ -1,38 +1,38 @@
 #ifndef PACMAN_H
 #define PACMAN_H
 
-#include <QGraphicsScene>
-#include <QPainter>
 #include <QGraphicsObject>
+#include <QPainter>
 #include <QDebug>
+#include <QGraphicsScene>
 
 class Pacman : public QGraphicsObject
 {
     Q_OBJECT
 
 public:
+    enum Dir{Stop = -1, Up, Down, Left, Right};
+
     Pacman();
-    QRectF boundingRect() const;
-    void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
+    ~Pacman();
 
-    double getWidth();
-    double getHeight();
+    QRectF boundingRect() const override;
+    void paint(QPainter * painter, const QStyleOptionGraphicsItem * option,
+               QWidget * widget) override;
 
-    double getXpos() const;
-    void setXpos(double newXpos);
-
-    double getYpos() const;
-    void setYpos(double newYpos);
+protected:
+    void advance(int step) override;
 
 private:
-    double xpos;
-    double ypos;
-    double width;
-    double height;
+    qreal xpos;
+    qreal ypos;
+    qreal width;
+    qreal height;
+    int dir;
+    int dis;
 
-public slots:
-    void moveHandler(const double moveX, const double moveY);
-    void collisionHandler();
+private slots:
+    void changeDirectionHandler(int dir);
 };
 
 #endif // PACMAN_H

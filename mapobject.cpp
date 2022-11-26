@@ -11,15 +11,10 @@ MapObject::~MapObject()
 
 }
 
-QRectF MapObject::boundingRect() const
-{
-    return QRectF(0,0, 50, 50);
-}
-
 void MapObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QRectF rect = this->boundingRect();
-    QBrush brush(Qt::black);
+    QBrush brush(Qt::red);
 
     painter->fillRect(rect, brush);
     painter->drawRect(rect);

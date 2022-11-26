@@ -1,11 +1,11 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-#include <QGraphicsScene>
 #include <QWidget>
 #include <QKeyEvent>
-#include "pacmanthread.h"
+#include <QTimer>
 #include "pacman.h"
+#include "gamemap.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWidget; }
@@ -22,11 +22,11 @@ public:
 
 private:
     Ui::MainWidget *ui;
-    QGraphicsScene * map;
+    GameMap * map;
     Pacman * pacman;
-    PacmanThread * pacmanThread;
+    QTimer * timer;
 
 signals:
-    void changeDirection(const int & dir);
+    void changeDirectionSignal(int dir);
 };
 #endif // MAINWIDGET_H
