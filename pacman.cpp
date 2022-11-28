@@ -54,86 +54,38 @@ void Pacman::advance(int step)
     {
     case Up:
     {
-        switch(this->nowDir)
+        x = (this->nowDir == Left) ? floor(xCurrentPoint()) : ceil(xCurrentPoint());
+        if (x == xCurrentPoint() && (y > 0 && this->pointMap[y - 1][x] != GameMap::MapObjectType))
         {
-        case Up:
-        case Down:
             this->nowDir = Up;
             this->nextDir = Stop;
-            break;
-        case Left:
-        case Right:
-        case Stop:
-            x = (this->nowDir == Left) ? floor(xCurrentPoint()) : ceil(xCurrentPoint());
-            if (x == xCurrentPoint() && (y > 0 && this->pointMap[y - 1][x] != GameMap::MapObjectType))
-            {
-                this->nowDir = Up;
-                this->nextDir = Stop;
-            }
-            break;
         }
     } break;
     case Down:
     {
-        switch(this->nowDir)
+        x = (this->nowDir == Left) ? floor(xCurrentPoint()) : ceil(xCurrentPoint());
+        if (x == xCurrentPoint() && (y < this->pointMap.size() - 1 && this->pointMap[y + 1][x] != GameMap::MapObjectType))
         {
-        case Up:
-        case Down:
             this->nowDir = Down;
             this->nextDir = Stop;
-            break;
-        case Left:
-        case Right:
-        case Stop:
-            x = (this->nowDir == Left) ? floor(xCurrentPoint()) : ceil(xCurrentPoint());
-            if (x == xCurrentPoint() && (y < this->pointMap.size() - 1 && this->pointMap[y + 1][x] != GameMap::MapObjectType))
-            {
-                this->nowDir = Down;
-                this->nextDir = Stop;
-            }
-            break;
         }
     } break;
     case Left:
     {
-        switch(this->nowDir)
+        y = (this->nowDir == Up) ? floor(yCurrentPoint()) : ceil(yCurrentPoint());
+        if (y == yCurrentPoint() && (x > 0 && this->pointMap[y][x - 1] != GameMap::MapObjectType))
         {
-        case Left:
-        case Right:
             this->nowDir = Left;
             this->nextDir = Stop;
-            break;
-        case Up:
-        case Down:
-        case Stop:
-            y = (this->nowDir == Up) ? floor(yCurrentPoint()) : ceil(yCurrentPoint());
-            if (y == yCurrentPoint() && (x > 0 && this->pointMap[y][x - 1] != GameMap::MapObjectType))
-            {
-                this->nowDir = Left;
-                this->nextDir = Stop;
-            }
-            break;
         }
     } break;
     case Right:
     {
-        switch(this->nowDir)
+        y = (this->nowDir == Up) ? floor(yCurrentPoint()) : ceil(yCurrentPoint());
+        if (y == yCurrentPoint() && (x < this->pointMap[y].size() - 1 && this->pointMap[y][x + 1] != GameMap::MapObjectType))
         {
-        case Left:
-        case Right:
             this->nowDir = Right;
             this->nextDir = Stop;
-            break;
-        case Up:
-        case Down:
-        case Stop:
-            y = (this->nowDir == Up) ? floor(yCurrentPoint()) : ceil(yCurrentPoint());
-            if (y == yCurrentPoint() && (x < this->pointMap[y].size() - 1 && this->pointMap[y][x + 1] != GameMap::MapObjectType))
-            {
-                this->nowDir = Right;
-                this->nextDir = Stop;
-            }
-            break;
         }
     } break;
     }
@@ -168,44 +120,6 @@ void Pacman::advance(int step)
             this->nowDir = Stop;
     } break;
     }
-    qDebug() << "x : " << x
-             << "y : " << y;
-
-
-//    const QList<QGraphicsItem *> collidingItems = this->collidingItems();
-
-//    for (int i = 0; i < collidingItems.size(); i++)
-//    {
-//        if (dynamic_cast<MapObject *>(collidingItems[i]))
-//        {
-//            QRectF otherRect = collidingItems[i]->boundingRect();
-//            qDebug() << otherRect;
-//            switch(this->dir)
-//            {
-//            case Up:
-//                if (otherRect.y() <= this->yPos)
-//                    this->yPos = otherRect.y() + otherRect.height();
-//                qDebug() << "stop from up";
-//                break;
-//            case Down:
-//                if (otherRect.y() >= this->yPos)
-//                    this->yPos = otherRect.y() - this->height;
-//                qDebug() << "stop from down";
-//                break;
-//            case Left:
-//                if (otherRect.x() <= this->xPos)
-//                    this->xPos = otherRect.x() + otherRect.width();
-//                qDebug() << "stop from left";
-//                break;
-//            case Right:
-//                if (otherRect.x() >= this->xPos)
-//                    this->xPos = otherRect.x() - this->width;
-//                qDebug() << "stop from right";
-//                break;
-//            }
-//            this->dir = Stop;
-//        }
-//    }
 
     // move
     QRectF sceneRect = this->scene()->sceneRect();
