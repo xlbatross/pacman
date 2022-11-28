@@ -9,7 +9,7 @@ class Cookie : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    Cookie(qreal xPos, qreal yPos);
+    Cookie(qreal xStart, qreal yStart, qreal xPoint, qreal yPoint, qreal blockWidth, qreal blockHeight);
     ~Cookie();
 
     QRectF boundingRect() const override;
@@ -19,6 +19,7 @@ protected:
     void advance(int step) override;
 
 private:
+    qreal bSize;
     qreal xPos;
     qreal yPos;
 

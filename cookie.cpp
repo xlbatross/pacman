@@ -1,11 +1,12 @@
 #include "cookie.h"
 #include "pacman.h"
 
-Cookie::Cookie(qreal xPos, qreal yPos)
-    : xPos(xPos)
-    , yPos(yPos)
+Cookie::Cookie(qreal xStart, qreal yStart, qreal xPoint, qreal yPoint, qreal blockWidth, qreal blockHeight)
 {
-
+    QRectF block(xStart + xPoint * blockWidth, yStart + yPoint * blockHeight, blockWidth, blockHeight);
+    this->bSize = 5;
+    this->xPos = block.center().x() - this->bSize / 2;
+    this->yPos = block.center().y() - this->bSize / 2;
 }
 
 Cookie::~Cookie()
@@ -15,7 +16,7 @@ Cookie::~Cookie()
 
 QRectF Cookie::boundingRect() const
 {
-    return QRectF(xPos, yPos, 50, 50);
+    return QRectF(xPos, yPos, bSize, bSize);
 }
 
 void Cookie::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -25,7 +26,6 @@ void Cookie::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 
     painter->setBrush(brush);
     painter->drawEllipse(rect);
-
 }
 
 void Cookie::advance(int step)
@@ -40,6 +40,7 @@ void Cookie::advance(int step)
         if (dynamic_cast<Pacman *>(collidingItems[i]))
         {
             emit eatSignal(this);
+            break;
         }
     }
 }

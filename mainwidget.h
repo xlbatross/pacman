@@ -25,7 +25,7 @@ private:
     QTimer * timer;
 
 private slots:
-    void scoreUpHandler();
+    void scoreUpHandler(int point);
 
 signals:
     void changeDirectionSignal(int dir);

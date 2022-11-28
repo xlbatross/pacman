@@ -8,10 +8,14 @@
 class MapObject : public QGraphicsRectItem
 {
 public:
-    MapObject(qreal x, qreal y, qreal width, qreal height, QGraphicsItem *parent = nullptr);
+    MapObject(qreal xStart, qreal yStart,
+              qreal xPos, qreal yPos,
+              qreal width, qreal height,
+              QGraphicsItem *parent = nullptr);
     ~MapObject();
 
-    void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
+    void paint(QPainter * painter, const QStyleOptionGraphicsItem * option,
+               QWidget * widget);
 
 };
 
